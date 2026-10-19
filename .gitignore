@@ -13,3 +13,6 @@ Thumbs.db
 # Build outputs
 /build/
 /firmware/
+
+# Python script checks
+__pycache__/

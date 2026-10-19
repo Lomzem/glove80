@@ -26,6 +26,22 @@ Save your current firmware or export your layout before installation. Use the sa
 
 For the first installation, connect each half with a USB data cable. Install the right half first. The key names below refer to the factory keycaps. Use the specified physical positions if your keycaps differ.
 
+### Guided installation on Linux
+
+Run the reusable wizard from a terminal:
+
+```sh
+./scripts/flash-wizard.sh
+# Or use a firmware file downloaded from GitHub:
+./scripts/flash-wizard.sh ~/Downloads/glove80.uf2
+```
+
+It validates the combined firmware, guides the physical buttons and cable changes, detects the correct bootloader by its volume label, and asks before copying to each half. It offers both-halves installation or a left-only keymap update, followed by an optional pairing reset. Requirements: Bash, Python 3, and `lsblk`; `udisksctl` is needed if your desktop does not mount the drive automatically. It does not require sudo.
+
+If `/run/media/$USER/GLV80RHBOOT` does not exist, the keyboard is either not in bootloader mode yet or its drive is unmounted. Do not create that directory yourself. The wizard waits for the actual device and mounts it if needed. To inspect devices manually, run `lsblk -o NAME,LABEL,MOUNTPOINTS`.
+
+### Manual installation
+
 1. Turn off the right half. Connect it to your computer.
 2. Hold PgDn and I at positions `C6R6` and `C3R3`. Turn on the right half. Release the keys when the red LED pulses slowly.
 3. Copy `glove80.uf2` to the `GLV80RHBOOT` USB drive. Wait for the drive to disappear and the half to restart before you disconnect it.
