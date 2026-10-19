@@ -13,3 +13,7 @@ Use the five default triage labels. Before triaging issues, read `docs/agents/tr
 ### Domain docs
 
 Use a single-context layout: root `GLOSSARY.md` and `docs/adr/`. Before exploring the codebase, read `docs/agents/domain.md`.
+
+### Keymap changes
+
+For hotkey bindings, Layer activation, or timing changes, read `docs/agents/keymap.md` before editing.
