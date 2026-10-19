@@ -12,6 +12,8 @@ This repository starts from upstream commit `7d8c0076308c5649614317fd8c6b53b800c
 
 The matching initial JSON and keymap were checked for all 29 layers and 80 key positions per layer, including the remapped Factory and macOS toggles. Builds consume `config/glove80.keymap`; JSON is an editor snapshot, so future edits must explicitly synchronize them when moving between code and editor workflows.
 
+Subsequent personal customizations are synchronized in both files: difficulty 5 (upstream expert preset, 100 ms tapping resolution); right T4/Symbol + h/y/n for double quote/backtick/single quote; left T4/Cursor + h/j/k/l for Left/Down/Up/Right and m/comma for Ctrl+Tab/Ctrl+Shift+Tab. These replace the previous bindings at those positions. The README lists the current behavior; the upstream maps describe the original defaults.
+
 ## Firmware generation
 
 [MoErgo's import/export documentation](https://docs.moergo.com/layout-editor-guide/advanced-usage-export-import/) says to enable **Settings → Local Backup and Restore**, then use the editor's bottom-left Import controls for JSON. The editor can also export `.keymap` DTSI for local builds. [MoErgo's build guide](https://docs.moergo.com/layout-editor-guide/building-firmware/) documents hosted firmware generation.

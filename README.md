@@ -2,7 +2,14 @@
 
 This configuration uses [Glorious Engrammer v52](https://github.com/sunaku/glove80-keymaps/tree/v52) with QWERTY as the only alphabet layout. It removes Enthium, Dvorak, Colemak, and their Magic layer selectors. It keeps all other layers, including Gaming, Factory QWERTY, and the macOS modifier overlay.
 
-The firmware version is MoErgo v26.09. Other settings use upstream defaults, including Linux shortcuts and difficulty 0. Home-row modifiers usually require the letter and modifier on opposite hands. Set your computer's input layout to US QWERTY.
+The firmware version is MoErgo v26.09. Home-row modifiers use upstream difficulty **5 (expert)**: 100 ms tapping resolution, with the upstream per-finger hold-time offsets. Linux shortcuts and bilateral enforcement remain enabled: home-row modifiers usually require the letter and modifier on opposite hands. Set your computer's input layout to US QWERTY.
+
+Personal bindings (letter names refer to their QWERTY positions):
+
+- Hold **right T4** (Space / Symbol): `h` types a double quote (`"`), `y` types a backtick, and `n` types a single quote (`'`).
+- Hold **left T4** (Backspace / Cursor): `h`, `j`, `k`, `l` send Left, Down, Up, Right; `m` sends Ctrl+Tab; comma sends Ctrl+Shift+Tab.
+
+Other layer bindings retain their upstream behavior. The full upstream preset definitions are [documented in the keymap](https://github.com/sunaku/glove80-keymaps/blob/v52/keymap.dtsi).
 
 ## Build
 
@@ -36,7 +43,7 @@ Run the reusable wizard from a terminal:
 ./scripts/flash-wizard.sh ~/Downloads/glove80.uf2
 ```
 
-It validates the combined firmware, guides the physical buttons and cable changes, detects the correct bootloader by its volume label, and asks before copying to each half. It offers both-halves installation or a left-only keymap update, followed by an optional pairing reset. Requirements: Bash, Python 3, and `lsblk`; `udisksctl` is needed if your desktop does not mount the drive automatically. It does not require sudo.
+It validates the combined firmware, guides the physical buttons and cable changes, detects the correct bootloader by its volume label, and asks before copying to each half. Confirmation prompts default to **Yes** on Enter; type `n` to decline. It offers both-halves installation or a left-only keymap update, followed by an optional pairing reset. For keymap-only updates, choose `left` and answer `n` to the reset prompt. Requirements: Bash, Python 3, and `lsblk`; `udisksctl` is needed if your desktop does not mount the drive automatically. It does not require sudo.
 
 If `/run/media/$USER/GLV80RHBOOT` does not exist, the keyboard is either not in bootloader mode yet or its drive is unmounted. Do not create that directory yourself. The wizard waits for the actual device and mounts it if needed. To inspect devices manually, run `lsblk -o NAME,LABEL,MOUNTPOINTS`.
 

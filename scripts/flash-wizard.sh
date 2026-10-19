@@ -81,12 +81,12 @@ pause() {
   read -r _ || true
 }
 
-# confirm "question" is a y/N gate; returns success on yes.
+# confirm "question" defaults to yes on Enter; EOF still cancels.
 confirm() {
   local reply=""
-  printf '  %s? %s [y/N] ' "$YELLOW" "$1"
-  read -r reply || true
-  [[ "$reply" =~ ^[Yy] ]]
+  printf '  %s? %s [Y/n] ' "$YELLOW" "$1"
+  read -r reply || return 1
+  [[ -z "$reply" || "$reply" =~ ^[Yy] ]]
 }
 
 # _existing KEY: current value of KEY in ENV_FILE, if any, with write_env's single
