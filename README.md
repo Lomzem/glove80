@@ -8,6 +8,7 @@ Personal bindings (letter names refer to their QWERTY positions):
 
 - Hold **right T4** (Space / Symbol): `h` types a double quote (`"`), `y` types a backtick, and `n` types a single quote (`'`).
 - On **Symbol**, `w` / `e` type `(` / `)`, and `2` / `3` type `{` / `}`.
+- On **Symbol**, `r` types `;`, and `1` / `4` type `[` / `]`.
 - Hold **left T4** (Backspace / Cursor): `h`, `j`, `k`, `l` send Left, Down, Up, Right; `m` sends Ctrl+Tab; comma sends Ctrl+Shift+Tab.
 - Tap **right T6** to toggle [Caps Word](https://zmk.dev/docs/keymaps/behaviors/caps-word), the smart caps mode. Letters become uppercase; digits, underscore, hyphen, Backspace, and Delete continue the mode. Space or another word-breaking key ends it; tap right T6 again to turn it off manually.
 
