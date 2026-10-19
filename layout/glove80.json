@@ -4,7 +4,7 @@
   "locale": "en-US",
   "unlisted": false,
   "title": "Glorious Engrammer v52 — QWERTY only",
-  "notes": "Sunaku's Keymap v52 for the \"Glorious Engrammer\" 🧑‍🚀🚀✨\n- Intro & setup: https://github.com/sunaku/glove80-keymaps/tree/v52/#readme\n- Release notes: https://github.com/sunaku/glove80-keymaps/releases/tag/v52\n- Printable map: https://github.com/sunaku/glove80-keymaps/raw/v52/README/all-layer-diagrams.pdf\n- Documentation: https://sunaku.github.io/moergo-glove80-keyboard.html#layers\n- Discord forum: #glorious-engrammer channel in https://www.moergo.com/discord\n\nQWERTY-only derivative: QWERTY is layer 0; Enthium, Dvorak, and Colemak layers and their Magic selectors removed. All other upstream defaults preserved. Source: https://github.com/Lomzem/glove80\nPersonal customizations: difficulty 5 (expert); right T4+h/y/n = double quote/backtick/single quote; left T4+h/j/k/l = left/down/up/right; left T4+m/comma = Ctrl+Tab/Ctrl+Shift+Tab.\nSymbol layer: QWERTY W/E positions type parentheses; 2/3 positions type curly braces.\nRight T6 toggles Caps Word (smart caps), replacing mouse-scroll-down on the base layer.\nSymbol layer: R types semicolon; 1/4 type left/right square brackets.",
+  "notes": "Sunaku's Keymap v52 for the \"Glorious Engrammer\" 🧑‍🚀🚀✨\n- Intro & setup: https://github.com/sunaku/glove80-keymaps/tree/v52/#readme\n- Release notes: https://github.com/sunaku/glove80-keymaps/releases/tag/v52\n- Printable map: https://github.com/sunaku/glove80-keymaps/raw/v52/README/all-layer-diagrams.pdf\n- Documentation: https://sunaku.github.io/moergo-glove80-keyboard.html#layers\n- Discord forum: #glorious-engrammer channel in https://www.moergo.com/discord\n\nQWERTY-only derivative: QWERTY is layer 0; Enthium, Dvorak, and Colemak layers and their Magic selectors removed. All other upstream defaults preserved. Source: https://github.com/Lomzem/glove80\nPersonal customizations: difficulty 5 (expert); right T4+h/y/n = double quote/backtick/single quote; left T4+h/j/k/l = left/down/up/right; left T4+m/comma = Ctrl+Tab/Ctrl+Shift+Tab.\nSymbol layer: QWERTY W/E positions type parentheses; 1/4 positions type curly braces.\nRight T6 toggles Caps Word (smart caps), replacing mouse-scroll-down on the base layer.\nSymbol layer: R types semicolon; 2/3 type left/right square brackets.",
   "tags": [
     "sunaku",
     "home-row-mods",
@@ -9854,14 +9854,6 @@
         "value": "&kp",
         "params": [
           {
-            "value": "LBKT"
-          }
-        ]
-      },
-      {
-        "value": "&kp",
-        "params": [
-          {
             "value": "LS",
             "params": [
               {
@@ -9875,12 +9867,7 @@
         "value": "&kp",
         "params": [
           {
-            "value": "LS",
-            "params": [
-              {
-                "value": "RBKT"
-              }
-            ]
+            "value": "LBKT"
           }
         ]
       },
@@ -9889,6 +9876,19 @@
         "params": [
           {
             "value": "RBKT"
+          }
+        ]
+      },
+      {
+        "value": "&kp",
+        "params": [
+          {
+            "value": "LS",
+            "params": [
+              {
+                "value": "RBKT"
+              }
+            ]
           }
         ]
       },
