@@ -9,3 +9,7 @@ Thumbs.db
 *~
 *.swp
 *.swo
+
+# Build outputs
+/build/
+/firmware/

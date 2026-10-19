@@ -1,0 +1,35 @@
+name: Build
+
+on:
+  push:
+    paths:
+      - 'config/**'
+      - 'scripts/build.sh'
+      - '.github/workflows/build.yml'
+  pull_request:
+    paths:
+      - 'config/**'
+      - 'scripts/build.sh'
+      - '.github/workflows/build.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  firmware:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: cachix/install-nix-action@v25
+      - uses: cachix/cachix-action@v14
+        with:
+          name: moergo-glove80-zmk-dev
+          skipPush: true
+      - name: Build both halves
+        run: ./scripts/build.sh
+      - uses: actions/upload-artifact@v4
+        with:
+          name: glove80-firmware
+          path: firmware/glove80.uf2
+          if-no-files-found: error
