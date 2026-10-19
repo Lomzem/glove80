@@ -21,13 +21,22 @@ To build on GitHub:
 2. Open [Actions](https://github.com/Lomzem/glove80/actions/workflows/build.yml) and select the successful Build run. A configuration push starts a build. You can also select Run workflow.
 3. Download and extract the `glove80-firmware` artifact to get `glove80.uf2`.
 
-To build locally, install [Nix](https://nixos.org/download/) and run:
+### Build locally
+
+Install [Nix](https://nixos.org/download/). On Arch Linux:
+
+```sh
+sudo pacman -S nix
+sudo systemctl enable --now nix-daemon.socket
+```
+
+Then run:
 
 ```sh
 ./scripts/build.sh
 ```
 
-The script downloads the specified firmware source and dependencies. It writes `firmware/glove80.uf2`.
+The script builds the current local configuration, including uncommitted keymap edits. It downloads the pinned firmware source and toolchain dependencies as needed; subsequent builds reuse the Nix store. It validates the result before replacing `firmware/glove80.uf2`, and preserves a changed previous file as `firmware/glove80-previous.uf2`. A failed build stops the wizard instead of flashing an older file.
 
 ## Install
 
@@ -45,7 +54,7 @@ Run the reusable wizard from a terminal:
 ./scripts/flash-wizard.sh ~/Downloads/glove80.uf2
 ```
 
-By default, the wizard downloads the latest successful GitHub build for your branch and verifies that its build inputs match your checkout. It stops if the current configuration has not built successfully yet, rather than reusing an old local UF2. This requires an authenticated GitHub CLI (`gh auth login`). A README-only commit does not need a new build. Pass a UF2 path explicitly for an offline or local build; explicit files are checked for UF2 integrity, but their configuration version is not verified.
+By default, the wizard builds your current configuration locally using Nix before starting the USB steps. It does not need GitHub CLI, a push, or a successful GitHub Actions run. The first build needs internet access to fetch source and dependencies. Pass a UF2 path explicitly to skip building; explicit files are checked for UF2 integrity, but their configuration version is not verified.
 
 It validates the combined firmware, guides the physical buttons and cable changes, detects the correct bootloader by its volume label, and asks before copying to each half. Confirmation prompts default to **Yes** on Enter; type `n` to decline. It offers both-halves installation or a left-only keymap update, followed by an optional pairing reset. For keymap-only updates, choose `left` and answer `n` to the reset prompt. Requirements: Bash, Python 3, and `lsblk`; `udisksctl` is needed if your desktop does not mount the drive automatically. It does not require sudo.
 
