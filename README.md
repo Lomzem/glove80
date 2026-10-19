@@ -7,6 +7,7 @@ The firmware version is MoErgo v26.09. Home-row modifiers use upstream difficult
 Personal bindings (letter names refer to their QWERTY positions):
 
 - Hold **right T4** (Space / Symbol): `h` types a double quote (`"`), `y` types a backtick, and `n` types a single quote (`'`).
+- On **Symbol**, `w` / `e` type `(` / `)`, and `2` / `3` type `{` / `}`.
 - Hold **left T4** (Backspace / Cursor): `h`, `j`, `k`, `l` send Left, Down, Up, Right; `m` sends Ctrl+Tab; comma sends Ctrl+Shift+Tab.
 
 Other layer bindings retain their upstream behavior. The full upstream preset definitions are [documented in the keymap](https://github.com/sunaku/glove80-keymaps/blob/v52/keymap.dtsi).
