@@ -23,9 +23,9 @@ Done when every requested binding/setting agrees in both files and unrelated bin
 
 ## 3. Build and deliver
 
-Run `git diff --check` and `./scripts/build.sh`. A successful local build validates the combined UF2 and replaces `firmware/glove80.uf2`; a source edit or GitHub push alone does not update that file. For simple remaps, verify the changed Positions and rely on the real firmware build rather than adding tests that restate the bindings.
+Verify the changed Positions, stage the task's files, and commit. The Lefthook firmware check builds a snapshot of the staged inputs, validates the combined UF2, and updates `firmware/glove80.uf2`. It skips commits without firmware changes. Set up the hook once using the [README](../../README.md#commit-checks). For simple remaps, rely on this real build rather than adding tests that restate the bindings.
 
-Commit and push the task's files after the local build succeeds. Monitor GitHub Actions only when requested. Report the changes and whether the local build passed. Leave unrelated work in the checkout intact.
+Require the hook's `[firmware] PASS` before reporting a firmware change as built. On failure, read the diagnostic excerpt and `build/firmware-pre-commit.log`, fix and stage the inputs, then retry. Run `python3 scripts/check-firmware.py` to reproduce the staged check directly, or `./scripts/build.sh` to build working-tree edits. Push after the commit succeeds; monitor GitHub Actions only when requested. Leave unrelated work intact.
 
 The user performs the hardware steps with `./scripts/flash-wizard.sh`, which builds locally by default. An explicit UF2 argument skips building. For keymap-only changes on the same firmware/advanced configuration, tell them to choose `left` and decline the optional pairing reset. For firmware/advanced-configuration changes, follow the [README installation and reset instructions](../../README.md#install).
 

@@ -39,6 +39,21 @@ Then run:
 
 The script builds the current local configuration, including uncommitted keymap edits. It downloads the pinned firmware source and toolchain dependencies as needed; subsequent builds reuse the Nix store. It validates the result before replacing `firmware/glove80.uf2`, and preserves a changed previous file as `firmware/glove80-previous.uf2`. A failed build stops the wizard instead of flashing an older file.
 
+## Commit checks
+
+Install the shared Lefthook hook once per clone (Bun required):
+
+```sh
+bun add --global lefthook@2.2.2
+"$(bun pm bin -g)/lefthook" install
+```
+
+The firmware pre-commit check runs only when staged firmware inputs change, including the editor JSON, build scripts, and validation code. It builds a temporary copy of the Git index, so partially staged changes are checked exactly as committed. It leaves unstaged edits alone. Documentation-only commits skip compilation.
+
+Success updates `firmware/glove80.uf2` from the staged configuration. Failure blocks the commit, preserves the existing firmware, and prints diagnostics plus the full log path, `build/firmware-pre-commit.log`. Fix and stage the reported inputs, then retry the commit. To reproduce the check without committing, run `python3 scripts/check-firmware.py`.
+
+The firmware command lives in `lefthook/firmware.yml`, included by the root `lefthook.yml`. Additional site checks can share that root configuration. See [Lefthook's configuration merging](https://lefthook.dev/configuration/extends/).
+
 ## Install
 
 Save your current firmware or export your layout before installation. Use the same `glove80.uf2` file for both halves.

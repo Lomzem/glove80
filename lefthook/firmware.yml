@@ -1,0 +1,4 @@
+pre-commit:
+  commands:
+    firmware:
+      run: python3 scripts/check-firmware.py
