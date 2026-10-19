@@ -1,72 +1,86 @@
 # Glove80 configuration
 
-[Glorious Engrammer v52](https://github.com/sunaku/glove80-keymaps/tree/v52), with **QWERTY as the base and only alphabet layout**. Enthium, Dvorak, and Colemak are removed, and their Magic-layer selectors are disabled. The functional layers (including Gaming, Factory QWERTY, and the macOS modifier overlay) remain.
+This configuration uses [Glorious Engrammer v52](https://github.com/sunaku/glove80-keymaps/tree/v52) with QWERTY as the only alphabet layout. It removes Enthium, Dvorak, Colemak, and their Magic layer selectors. It keeps all other layers, including Gaming, Factory QWERTY, and the macOS modifier overlay.
 
-Everything else uses upstream defaults: Linux shortcuts, difficulty 0, home-row modifiers with bilateral enforcement, mouse keys, layer access, colors, and timing. Home-row modifiers generally need the letter and modifier on opposite hands. Keep your computer's input layout set to US QWERTY. Firmware is pinned to MoErgo **v26.09**, rather than following a moving branch.
+The firmware version is MoErgo v26.09. Other settings use upstream defaults, including Linux shortcuts and difficulty 0. Home-row modifiers usually require the letter and modifier on opposite hands. Set your computer's input layout to US QWERTY.
 
-## Build the firmware
+## Build
 
-The easiest build runs on GitHub, without installing a toolchain:
+To build on GitHub:
 
-1. Commit and push this configuration to this repository.
-2. Open [Actions → Build](https://github.com/Lomzem/glove80/actions/workflows/build.yml). A configuration push starts a build; you can also select **Run workflow**.
-3. Open the successful run and download the **glove80-firmware** artifact. Unzip it to obtain `glove80.uf2`.
+1. Commit and push the configuration to this repository.
+2. Open [Actions](https://github.com/Lomzem/glove80/actions/workflows/build.yml) and select the successful Build run. A configuration push starts a build. You can also select Run workflow.
+3. Download and extract the `glove80-firmware` artifact to get `glove80.uf2`.
 
-The artifact contains **one combined UF2 for both halves**. Use that same file on each half. Keep a copy of your current firmware or export your existing layout before replacing it.
-
-For a local build, install [Nix](https://nixos.org/download/) and run:
+To build locally, install [Nix](https://nixos.org/download/) and run:
 
 ```sh
 ./scripts/build.sh
 ```
 
-This downloads the pinned MoErgo source and its build dependencies and writes `firmware/glove80.uf2`. The first build can take a while. GitHub Actions uses MoErgo's binary cache.
+The script downloads the specified firmware source and dependencies. It writes `firmware/glove80.uf2`.
 
-## Install over USB-C
+## Install
 
-**The first installation needs both halves connected by USB, one at a time.** A single USB data cable is enough: flash the **right half first**, then move the cable to the left. Both halves need the same firmware version. Normal wired use afterward only needs the left connected; the right communicates wirelessly.
+Save your current firmware or export your layout before installation. Use the same `glove80.uf2` file for both halves.
 
-Use the physical power-up bootloader shortcut below, which works regardless of the layout currently installed. The names are the original factory keycap legends; the physical positions are what matter.
+For the first installation, connect each half with a USB data cable. Install the right half first. The key names below refer to the factory keycaps. Use the specified physical positions if your keycaps differ.
 
-1. Turn the **right** half off and connect it to your computer with a USB data cable.
-2. Hold **PgDn + I** (physical `C6R6 + C3R3` on the right), then turn that half on. Release the keys once bootloader mode starts. Its red LED pulses slowly.
-3. Open the **GLV80RHBOOT** USB drive. Copy `glove80.uf2` into it. The drive disappears as the half reboots; wait for it to finish before unplugging.
-4. Turn the **left** half off, move the USB cable to it, hold **Magic + E** (physical `C6R6 + C3R3` on the left), and turn it on.
-5. Copy the **same** `glove80.uf2` into **GLV80LHBOOT** and let it reboot.
+1. Turn off the right half. Connect it to your computer.
+2. Hold PgDn and I at positions `C6R6` and `C3R3`. Turn on the right half. Release the keys when the red LED pulses slowly.
+3. Copy `glove80.uf2` to the `GLV80RHBOOT` USB drive. Wait for the drive to disappear and the half to restart before you disconnect it.
+4. Turn off the left half. Move the USB cable to it.
+5. Hold Magic and E at positions `C6R6` and `C3R3`. Turn on the left half. Release the keys when the red LED pulses slowly.
+6. Copy the same file to `GLV80LHBOOT`. Wait for the half to restart.
 
-On Linux you can copy from a terminal once your desktop has mounted the bootloader drive. Adjust the paths if your system mounts removable drives elsewhere:
+On Linux, you can use these commands after the drive mounts. Change the paths if necessary.
 
 ```sh
-# Right half first, while GLV80RHBOOT is mounted:
+# Install on the right half first.
 cp firmware/glove80.uf2 "/run/media/$USER/GLV80RHBOOT/"
 sync
 
-# Move the cable and enter bootloader mode on the left, then:
+# Move the cable and start the left half in bootloader mode.
 cp firmware/glove80.uf2 "/run/media/$USER/GLV80LHBOOT/"
 sync
 ```
 
-Use the downloaded UF2's path instead if you built through GitHub. Merely plugging in a half does not put it in bootloader mode. If no drive appears, check the power-up chord and that the USB cable supports data.
+For a GitHub build, use the path to the downloaded file. If no drive appears, check the keys and use a USB cable that supports data.
 
-For later **keymap-only** changes on this same firmware version and advanced configuration, flashing the left half is sufficient. Flash both again whenever updating the firmware version or advanced configuration. See [MoErgo's loading instructions](https://docs.moergo.com/glove80-user-guide/customizing-key-layout/#loading-new-zmk-firmware-onto-your-glove80) and [upstream's flashing guidance](https://github.com/sunaku/glove80-keymaps/tree/v52#flashing).
+After installation, wired use requires only the left half to be connected. The right half connects wirelessly.
 
-## Reset and re-pair after a firmware change
+For later keymap changes, install on the left half only. Install on both halves if you change the firmware version or advanced configuration. See the [MoErgo installation instructions](https://docs.moergo.com/glove80-user-guide/customizing-key-layout/#loading-new-zmk-firmware-onto-your-glove80) and [upstream instructions](https://github.com/sunaku/glove80-keymaps/tree/v52#flashing).
 
-If moving from another firmware version or changing advanced configuration, follow [MoErgo's configuration reset procedure](https://docs.moergo.com/glove80-user-guide/troubleshooting/#configuration-factory-reset-and-re-pairing-left-and-right-halves) after flashing both halves. This clears saved Bluetooth pairings and preferences, while preserving this keymap.
+## Reset and pair
 
-1. Turn both halves off. On the left, hold **Magic + 3** (physical `C6R6 + C3R2`), turn it on, hold for five seconds, then turn it off.
-2. With both halves off again, repeat on the right using **PgDn + 8** (physical `C6R6 + C3R2`).
-3. Turn both halves on together. Enable RGB and check that both halves light up, then disable it. Wait at least a minute for settings to persist. Re-pair Bluetooth hosts if needed.
+After a firmware version or advanced configuration change, install on both halves and reset them. The reset clears saved Bluetooth pairings and preferences. It keeps this keymap.
 
-## Customize later
+1. Turn off both halves.
+2. On the left, hold Magic and 3 at positions `C6R6` and `C3R2`. Turn it on. Hold the keys for five seconds, then turn it off.
+3. On the right, repeat step 2 with PgDn and 8 at positions `C6R6` and `C3R2`.
+4. Turn on both halves together. Enable RGB. Check that both halves light up, then disable RGB.
+5. Wait at least one minute for the settings to save. Pair your Bluetooth devices again if necessary.
 
-- `config/glove80.keymap` is the firmware build's source of truth. Edit its settings near `OPERATING_SYSTEM` to change OS or behavior; edit layer bindings near the bottom for key placement.
-- `config/glove80.conf` enables pointing support for the default mouse layer.
-- `config/default.nix` pins the firmware and builds both halves.
-- `layout/glove80.json` is the matching initial Layout Editor snapshot. It does not automatically stay in sync with direct keymap edits.
+See the [MoErgo reset procedure](https://docs.moergo.com/glove80-user-guide/troubleshooting/#configuration-factory-reset-and-re-pairing-left-and-right-halves).
 
-To edit visually, sign into the [MoErgo Layout Editor](https://my.moergo.com/glove80/), create a layout, enable **Settings → Local Backup and Restore**, and import `layout/glove80.json` using the bottom-left Import control. Keep QWERTY at layer 0 and use firmware **26.09**. The default mouse layer needs **HID_POINTING = y** in Advanced Configuration (already present in the JSON). The editor can build and download firmware directly, too.
+## Customize
 
-After visual edits, export both the JSON and the ZMK `.keymap` file back to their paths in this repository before using the GitHub build. Review any Advanced Configuration changes against `config/glove80.conf`. Avoid importing the initial JSON over later code-only changes.
+Edit these files:
 
-For learning the default layers, use [Sunaku's interactive guide](https://sunaku.github.io/moergo-glove80-keyboard.html#layers) and [printable maps](https://github.com/sunaku/glove80-keymaps/blob/v52/README/all-layer-diagrams.pdf), choosing the QWERTY base diagram. Alternate-alphabet shortcuts in those upstream guides are disabled here. Provenance and implementation details are in [upstream notes](docs/upstream-notes.md).
+- `config/glove80.keymap` defines the keymap. Change settings near `OPERATING_SYSTEM` and key positions in the layer bindings near the end.
+- `config/glove80.conf` enables mouse support.
+- `config/default.nix` specifies the firmware version and builds both halves.
+
+To use the [MoErgo Layout Editor](https://my.moergo.com/glove80/):
+
+1. Sign in and create a layout.
+2. Enable Local Backup and Restore in Settings.
+3. Use Import at the bottom left to load `layout/glove80.json`.
+4. Keep QWERTY on layer 0 and use firmware 26.09. Keep `HID_POINTING = y` in Advanced Configuration for mouse support.
+5. Build and download the firmware in the editor, or export the files for a GitHub build.
+
+After editor changes, export the JSON to `layout/glove80.json` and the ZMK keymap to `config/glove80.keymap`. Check advanced configuration changes against `config/glove80.conf`.
+
+The JSON file does not update when you edit the keymap directly. Do not import an older JSON file over those changes.
+
+Use the QWERTY diagrams in the [interactive layer guide](https://sunaku.github.io/moergo-glove80-keyboard.html#layers) and [printable maps](https://github.com/sunaku/glove80-keymaps/blob/v52/README/all-layer-diagrams.pdf). Their alternate alphabet shortcuts are disabled here. See [upstream notes](docs/upstream-notes.md) for source and implementation details.
