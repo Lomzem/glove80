@@ -1,0 +1,11 @@
+# Local issues, specs, and working notes
+/.scratch/
+
+# OS metadata
+.DS_Store
+Thumbs.db
+
+# Editor temporary files
+*~
+*.swp
+*.swo
