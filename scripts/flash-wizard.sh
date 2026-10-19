@@ -205,7 +205,7 @@ repo_root=$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")/.." && pwd)
 firmware_file=${1:-"$repo_root/firmware/glove80.uf2"}
 
 if [[ ${1:-} == --help ]]; then
-  printf 'Usage: %s [firmware.uf2]\nLinux USB flashing wizard; defaults to firmware/glove80.uf2.\n' "$0"
+  printf 'Usage: %s [firmware.uf2]\nLinux USB flashing wizard; downloads a matching GitHub build by default.\nPass a UF2 explicitly for offline or local builds.\n' "$0"
   return
 fi
 if [[ ! -t 0 ]]; then
@@ -224,6 +224,12 @@ stage "Choose firmware and installation mode"
 say "We will validate the firmware, flash right then left, and check typing/pairing."
 say "You handle the cable and buttons; this script locates and copies to the bootloader drives."
 say "It stores no credentials or preferences. Ctrl-C stops before the next flash."
+if [[ $# -eq 0 ]]; then
+  say "Downloading a successful GitHub build matching this configuration."
+  bash "$repo_root/scripts/download-firmware.sh" || return 1
+else
+  note "Using your explicitly selected UF2. Its configuration version is your responsibility."
+fi
 say "Firmware: $firmware_file"
 python3 "$repo_root/scripts/flash-drive.py" validate "$firmware_file"
 say "Save your old firmware or export your current layout before replacing it."

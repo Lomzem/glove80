@@ -9,6 +9,7 @@ Personal bindings (letter names refer to their QWERTY positions):
 - Hold **right T4** (Space / Symbol): `h` types a double quote (`"`), `y` types a backtick, and `n` types a single quote (`'`).
 - On **Symbol**, `w` / `e` type `(` / `)`, and `2` / `3` type `{` / `}`.
 - Hold **left T4** (Backspace / Cursor): `h`, `j`, `k`, `l` send Left, Down, Up, Right; `m` sends Ctrl+Tab; comma sends Ctrl+Shift+Tab.
+- Tap **right T6** to toggle [Caps Word](https://zmk.dev/docs/keymaps/behaviors/caps-word), the smart caps mode. Letters become uppercase; digits, underscore, hyphen, Backspace, and Delete continue the mode. Space or another word-breaking key ends it; tap right T6 again to turn it off manually.
 
 Other layer bindings retain their upstream behavior. The full upstream preset definitions are [documented in the keymap](https://github.com/sunaku/glove80-keymaps/blob/v52/keymap.dtsi).
 
@@ -43,6 +44,8 @@ Run the reusable wizard from a terminal:
 # Or use a firmware file downloaded from GitHub:
 ./scripts/flash-wizard.sh ~/Downloads/glove80.uf2
 ```
+
+By default, the wizard downloads the latest successful GitHub build for your branch and verifies that its build inputs match your checkout. It stops if the current configuration has not built successfully yet, rather than reusing an old local UF2. This requires an authenticated GitHub CLI (`gh auth login`). A README-only commit does not need a new build. Pass a UF2 path explicitly for an offline or local build; explicit files are checked for UF2 integrity, but their configuration version is not verified.
 
 It validates the combined firmware, guides the physical buttons and cable changes, detects the correct bootloader by its volume label, and asks before copying to each half. Confirmation prompts default to **Yes** on Enter; type `n` to decline. It offers both-halves installation or a left-only keymap update, followed by an optional pairing reset. For keymap-only updates, choose `left` and answer `n` to the reset prompt. Requirements: Bash, Python 3, and `lsblk`; `udisksctl` is needed if your desktop does not mount the drive automatically. It does not require sudo.
 
