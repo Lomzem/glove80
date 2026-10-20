@@ -268,7 +268,10 @@ step "Turn both halves on. Keep USB connected to the left for wired use."
 step "Try typing with both hands in a text editor."
 say "After firmware-version or advanced-configuration changes, reset BOTH halves."
 warn "A configuration reset clears Bluetooth pairings and saved preferences. It preserves this layout."
-if confirm "Walk through the physical reset and re-pair procedure now?"; then
+local reset_reply=""
+printf '  %s? Walk through the physical reset and re-pair procedure now? [y/N] ' "$YELLOW"
+read -r reset_reply || reset_reply=""
+if [[ "$reset_reply" =~ ^[Yy] ]]; then
   step "Turn BOTH halves OFF."
   step "LEFT: hold physical C6R6 + C3R2 (factory Magic + 3); turn it ON, hold 5 seconds, turn it OFF."
   pause "Press Enter after the left is off again."
