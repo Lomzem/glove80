@@ -4,7 +4,7 @@
   "locale": "en-US",
   "unlisted": false,
   "title": "Glorious Engrammer v52 — QWERTY only",
-  "notes": "Sunaku's Keymap v52 for the \"Glorious Engrammer\" 🧑‍🚀🚀✨\n- Intro & setup: https://github.com/sunaku/glove80-keymaps/tree/v52/#readme\n- Release notes: https://github.com/sunaku/glove80-keymaps/releases/tag/v52\n- Printable map: https://github.com/sunaku/glove80-keymaps/raw/v52/README/all-layer-diagrams.pdf\n- Documentation: https://sunaku.github.io/moergo-glove80-keyboard.html#layers\n- Discord forum: #glorious-engrammer channel in https://www.moergo.com/discord\n\nQWERTY-only derivative: QWERTY is layer 0; Enthium, Dvorak, and Colemak layers and their Magic selectors removed. All other upstream defaults preserved. Source: https://github.com/Lomzem/glove80\nPersonal customizations: difficulty 5 (expert); right T4+h/y/n = double quote/backtick/single quote; left T4+h/j/k/l = left/down/up/right; left T4+m/comma = Ctrl+Tab/Ctrl+Shift+Tab.\nSymbol layer: QWERTY W/E positions type parentheses; 1/4 positions type curly braces.\nRight T6 toggles Caps Word (smart caps), replacing mouse-scroll-down on the base layer.\nSymbol layer: R types semicolon; 2/3 type left/right square brackets.\nCursor layer: left T4+N/DOT send Home/End; M/comma remain Ctrl+Tab/Ctrl+Shift+Tab.\nMouse layer defaults to fast pointer movement; scrolling retains its original speed. Slow and warp overrides remain available.\nMouse layer: right T5+J/K scroll down/up, following Vim directions; C remains warp speed.\nMouse layer: right T5+M/comma/DOT send left/middle/right mouse buttons.\nMouse J/K: press for a prompt wheel notch down/up; keep holding for constant scrolling at 24 notches/second, with no tap/hold delay or velocity ramp. Pointer default scaling is 4x, with constant velocity and normalized diagonals.\nMouse L activates warp speed; X retains slow mode.\nMouse layer: J/K/L now send left/middle/right click; M/comma scroll down/up with the existing tap/hold behavior. C retains warp speed.",
+  "notes": "Sunaku's Keymap v52 for the \"Glorious Engrammer\" 🧑‍🚀🚀✨\n- Intro & setup: https://github.com/sunaku/glove80-keymaps/tree/v52/#readme\n- Release notes: https://github.com/sunaku/glove80-keymaps/releases/tag/v52\n- Printable map: https://github.com/sunaku/glove80-keymaps/raw/v52/README/all-layer-diagrams.pdf\n- Documentation: https://sunaku.github.io/moergo-glove80-keyboard.html#layers\n- Discord forum: #glorious-engrammer channel in https://www.moergo.com/discord\n\nQWERTY-only derivative: QWERTY is layer 0; Enthium, Dvorak, and Colemak layers and their Magic selectors removed. All other upstream defaults preserved. Source: https://github.com/Lomzem/glove80\nPersonal customizations: difficulty 5 (expert); right T4+h/y/n = double quote/backtick/single quote; left T4+h/j/k/l = left/down/up/right; left T4+m/comma = Ctrl+Tab/Ctrl+Shift+Tab.\nSymbol layer: QWERTY W/E positions type parentheses; 1/4 positions type curly braces.\nRight T6 toggles Caps Word (smart caps), replacing mouse-scroll-down on the base layer.\nSymbol layer: R types semicolon; 2/3 type left/right square brackets.\nCursor layer: left T4+N/DOT send Home/End; M/comma remain Ctrl+Tab/Ctrl+Shift+Tab.\nMouse layer defaults to fast pointer movement; scrolling retains its original speed. Slow and warp overrides remain available.\nMouse layer: right T5+J/K scroll down/up, following Vim directions; C remains warp speed.\nMouse layer: right T5+M/comma/DOT send left/middle/right mouse buttons.\nMouse J/K: press for a prompt wheel notch down/up; keep holding for constant scrolling at 24 notches/second, with no tap/hold delay or velocity ramp. Pointer default scaling is 4x, with constant velocity and normalized diagonals.\nMouse L activates warp speed; X retains slow mode.\nMouse layer: J/K/L now send left/middle/right click; M/comma scroll down/up with the existing tap/hold behavior. C retains warp speed.\nMouse layer: H activates slow mode while held (same as X), replacing its scroll-up binding.",
   "tags": [
     "sunaku",
     "home-row-mods",
@@ -10705,13 +10705,13 @@
         "value": "Custom",
         "params": [
           {
-            "value": "&msc MOUSE_SCROLL_UP"
+            "value": "&mo LAYER_Mouse_slow"
           }
         ],
         "decoration": {
-          "label": "Scroll",
-          "icon": "fa-angle-double-up",
-          "background": "#e8f5e9"
+          "label": "Slow",
+          "icon": "fa-alarm-clock",
+          "background": "#ffebee"
         }
       },
       {
