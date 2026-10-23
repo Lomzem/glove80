@@ -2,7 +2,7 @@
 
 This configuration uses [Glorious Engrammer v52](https://github.com/sunaku/glove80-keymaps/tree/v52) with QWERTY as the only alphabet layout. It removes Enthium, Dvorak, Colemak, and their Magic layer selectors. It keeps all other layers, including Gaming, Factory QWERTY, and the macOS modifier overlay.
 
-The firmware version is MoErgo v26.09. Home-row modifiers use upstream difficulty **5 (expert)**: 100 ms tapping resolution, with the upstream per-finger hold-time offsets. Linux shortcuts and bilateral enforcement remain enabled: home-row modifiers usually require the letter and modifier on opposite hands. Set your computer's input layout to US QWERTY.
+The firmware is MoErgo v26.09 with one local source patch (see [Pointer firmware patch](#pointer-firmware-patch)). Home-row modifiers use upstream difficulty **5 (expert)**: 100 ms tapping resolution, with the upstream per-finger hold-time offsets. Linux shortcuts and bilateral enforcement remain enabled: home-row modifiers usually require the letter and modifier on opposite hands. Set your computer's input layout to US QWERTY.
 
 Personal bindings (letter names refer to their QWERTY positions):
 
@@ -14,10 +14,10 @@ Personal bindings (letter names refer to their QWERTY positions):
 
 Hold **right T5** (Tab / Mouse) for the existing mouse controls:
 
-- Move: `e` up, `s` left, `d` down, `f` right. `/` also moves right.
+- Move: `e` up, `s` left, `d` down, `f` right. `/` also moves right. The pointer moves at a constant velocity from the first tick, with no acceleration ramp. Horizontal and vertical speeds are equal. Two directions together move diagonally at the same speed as a straight line, not about 41% faster. Opposite keys cancel, so `e` + `s` + `f` moves straight up. Releasing a key returns to the remaining direction's speed.
 - Click: `m` left, `,` middle, `.` right; `u` / `i` / `o` also provide left / middle / right click. Hold a click key while moving to drag. Left T4 / left T5 also provide left / right click on this layer.
 - Scroll: tap `j` down or `k` up for a one-notch wheel pulse (Vim directions). Keep holding for constant scrolling at 24 notches/second, starting on press with no tap/hold delay or acceleration. `h` up, `n` down, `y` left, `p` right also remain available at 30 notches/second.
-- Speed: pointer movement defaults to 5× scaling (previously 4×), making `e` / `s` / `d` / `f` 25% faster. Hold `x` for slow, or `l` / `c` for warp. Speed modifiers affect held scrolling; J/K tap pulses stay one notch.
+- Speed: pointer movement defaults to 5× scaling (previously 4×), making `e` / `s` / `d` / `f` 25% faster. Hold `x` for slow, or `l` / `c` for warp. Diagonals match straight speed in every mode. Speed modifiers affect held scrolling; J/K tap pulses stay one notch. Scrolling is not normalized: diagonal scrolling moves each wheel axis at full speed.
 
 Other layer bindings retain their upstream behavior. The full upstream preset definitions are [documented in the keymap](https://github.com/sunaku/glove80-keymaps/blob/v52/keymap.dtsi).
 
@@ -45,6 +45,18 @@ Then run:
 ```
 
 The script builds the current local configuration, including uncommitted keymap edits. It downloads the pinned firmware source and toolchain dependencies as needed; subsequent builds reuse the Nix store. It validates the result before replacing `firmware/glove80.uf2`, and preserves a changed previous file as `firmware/glove80-previous.uf2`. A failed build stops the wizard instead of flashing an older file.
+
+### Pointer firmware patch
+
+`config/zmk-normalize-diagonals.patch` adds an opt-in `normalize-diagonals` property to ZMK's two-axis input behavior. `config/firmware.nix` applies it to the pinned firmware, which `config/default.nix` builds for both halves. The keymap enables it only for pointer movement (`&mmv`), not scrolling. When both axes move, the firmware scales the combined velocity to the faster axis's speed before rounding to whole pixels, then carries each axis's fractional remainder to the next tick.
+
+Stock MoErgo firmware does not define this property and rejects the keymap with a devicetree error (`'normalize-diagonals' ... is not declared`). Build with Nix locally or on GitHub Actions; both use `config/default.nix`.
+
+To check pointer motion in ZMK's native simulator, run (requires Nix):
+
+```sh
+python3 -m unittest tests.test_pointer_motion
+```
 
 ## Commit checks
 
@@ -108,11 +120,11 @@ For a GitHub build, use the path to the downloaded file. If no drive appears, ch
 
 After installation, wired use requires only the left half to be connected. The right half connects wirelessly.
 
-For later keymap changes, install on the left half only. Install on both halves if you change the firmware version or advanced configuration. See the [MoErgo installation instructions](https://docs.moergo.com/glove80-user-guide/customizing-key-layout/#loading-new-zmk-firmware-onto-your-glove80) and [upstream instructions](https://github.com/sunaku/glove80-keymaps/tree/v52#flashing).
+For later keymap changes, install on the left half only. Install on both halves if you change the firmware version, a firmware source patch such as `config/zmk-normalize-diagonals.patch`, or advanced configuration. See the [MoErgo installation instructions](https://docs.moergo.com/glove80-user-guide/customizing-key-layout/#loading-new-zmk-firmware-onto-your-glove80) and [upstream instructions](https://github.com/sunaku/glove80-keymaps/tree/v52#flashing).
 
 ## Reset and pair
 
-After a firmware version or advanced configuration change, install on both halves and reset them. The reset clears saved Bluetooth pairings and preferences. It keeps this keymap.
+After a firmware version or advanced configuration change, install on both halves and reset them. The pointer normalization patch alone does not require a pairing reset. The reset clears saved Bluetooth pairings and preferences. It keeps this keymap.
 
 1. Turn off both halves.
 2. On the left, hold Magic and 3 at positions `C6R6` and `C3R2`. Turn it on. Hold the keys for five seconds, then turn it off.
@@ -128,7 +140,7 @@ Edit these files:
 
 - `config/glove80.keymap` defines the keymap. Change settings near `OPERATING_SYSTEM` and key positions in the layer bindings near the end.
 - `config/glove80.conf` enables mouse support.
-- `config/default.nix` specifies the firmware version and builds both halves.
+- `config/firmware.nix` specifies the firmware version and applies the pointer patch. `config/default.nix` builds both halves from it, and the pointer tests build the same firmware.
 
 To use the [MoErgo Layout Editor](https://my.moergo.com/glove80/):
 
@@ -136,7 +148,7 @@ To use the [MoErgo Layout Editor](https://my.moergo.com/glove80/):
 2. Enable Local Backup and Restore in Settings.
 3. Use Import at the bottom left to load `layout/glove80.json`.
 4. Keep QWERTY on layer 0 and use firmware 26.09. Keep `HID_POINTING = y` in Advanced Configuration for mouse support.
-5. Build and download the firmware in the editor, or export the files for a GitHub build.
+5. Build the firmware with Nix (locally or on GitHub). The hosted editor's build uses stock firmware, so it fails on `normalize-diagonals`. Importing the JSON keeps the property in the editor, but does not add the firmware patch. To build in the editor anyway, remove `normalize-diagonals;` from the `&mmv` block in Custom Defined Behaviors; diagonals then move about 41% faster than straight lines.
 
 After editor changes, export the JSON to `layout/glove80.json` and the ZMK keymap to `config/glove80.keymap`. Check advanced configuration changes against `config/glove80.conf`.
 

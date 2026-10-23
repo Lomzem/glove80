@@ -1,0 +1,84 @@
+diff --git a/dts/bindings/behaviors/zmk,behavior-input-two-axis.yaml b/dts/bindings/behaviors/zmk,behavior-input-two-axis.yaml
+--- a/dts/bindings/behaviors/zmk,behavior-input-two-axis.yaml
++++ b/dts/bindings/behaviors/zmk,behavior-input-two-axis.yaml
+@@ -28,0 +29,5 @@
++  normalize-diagonals:
++    type: boolean
++    description: |
++      Scale simultaneous x and y motion so its resultant speed matches the
++      faster axis alone. Applied before integer quantization.
+diff --git a/src/behaviors/behavior_input_two_axis.c b/src/behaviors/behavior_input_two_axis.c
+--- a/src/behaviors/behavior_input_two_axis.c
++++ b/src/behaviors/behavior_input_two_axis.c
+@@ -56,0 +57,2 @@
++    // Scale simultaneous x/y motion to the larger axis speed.
++    bool normalize_diagonals;
+@@ -137,3 +139,2 @@
+-static float update_movement_1d(const struct behavior_input_two_axis_config *config, uint16_t code,
+-                                struct movement_state_1d *state, int64_t now) {
+-    float move = 0;
++static float desired_movement_1d(const struct behavior_input_two_axis_config *config,
++                                 uint16_t code, struct movement_state_1d *state, int64_t now) {
+@@ -142 +143 @@
+-        return move;
++        return 0;
+@@ -147,8 +148,24 @@
+-    move =
+-        (move_duration > 0)
+-            ? (speed(config, code, state->speed, move_duration) * config->trigger_period_ms / 1000)
+-            : 0;
+-
+-    track_remainder(&(move), &(state->remainder));
+-
+-    return move;
++    return (move_duration > 0)
++               ? (speed(config, code, state->speed, move_duration) * config->trigger_period_ms / 1000)
++               : 0;
++}
++
++static void normalize_diagonal(struct vector2d *move) {
++    // Keep the resultant speed equal to the faster axis, as for straight motion.
++    if (move->x == 0 || move->y == 0) {
++        return;
++    }
++    float abs_x = move->x < 0 ? -move->x : move->x;
++    float abs_y = move->y < 0 ? -move->y : move->y;
++    float longest_axis = abs_x > abs_y ? abs_x : abs_y;
++    float length_squared = move->x * move->x + move->y * move->y;
++    // Newton's method without libm, which minimal libc builds lack. The
++    // length is within sqrt(2) of the longest axis; five steps reach float
++    // precision.
++    float length = longest_axis;
++    for (int i = 0; i < 5; i++) {
++        length = 0.5f * (length + length_squared / length);
++    }
++    float scale = longest_axis / length;
++    move->x *= scale;
++    move->y *= scale;
+@@ -155,0 +173 @@
++
+@@ -158,5 +176,3 @@
+-    struct vector2d move = {0};
+-
+-    move = (struct vector2d){
+-        .x = update_movement_1d(config, config->x_code, &state->x, now),
+-        .y = update_movement_1d(config, config->y_code, &state->y, now),
++    struct vector2d move = {
++        .x = desired_movement_1d(config, config->x_code, &state->x, now),
++        .y = desired_movement_1d(config, config->y_code, &state->y, now),
+@@ -164,0 +181,13 @@
++    // Normalize the net velocity before quantizing either axis, so the
++    // fractional remainders preserve the normalized average speed.
++    if (config->normalize_diagonals) {
++        normalize_diagonal(&move);
++    }
++
++    if (state->x.speed != 0) {
++        track_remainder(&move.x, &state->x.remainder);
++    }
++    if (state->y.speed != 0) {
++        track_remainder(&move.y, &state->y.remainder);
++    }
++
+@@ -297,0 +327 @@
++        .normalize_diagonals = DT_INST_PROP(n, normalize_diagonals),                               \

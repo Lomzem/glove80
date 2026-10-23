@@ -20,7 +20,7 @@ Subsequent personal customizations are synchronized in both files: difficulty 5 
 
 The upstream `rake` command generates snippets and diagrams; it does not compile a UF2. [MoErgo's official config workflow](https://github.com/moergo-sc/glove80-zmk-config/blob/main/.github/workflows/build.yml) checks out `moergo-sc/zmk`, runs `nix-build config -o combined`, and uploads `combined/glove80.uf2`. A reproducible local build should pin the firmware source revision as well as the layout.
 
-The build here pins MoErgo v26.09, commit `ce69e85f585c724142aae37ddf8a7e019ff19e93`, with the unpacked source hash in `config/default.nix`. The build expression and Actions setup follow MoErgo's config template (inspected at commit `34888be8c9d9a3d5b168a502b8b191ba43b4a1f3`). The firmware's own Nix expression pins its toolchain dependencies.
+The build here pins MoErgo v26.09, commit `ce69e85f585c724142aae37ddf8a7e019ff19e93`, with the unpacked source hash in `config/firmware.nix`. The build expression and Actions setup follow MoErgo's config template (inspected at commit `34888be8c9d9a3d5b168a502b8b191ba43b4a1f3`). The firmware's own Nix expression pins its toolchain dependencies. Its `nix/zmk.nix` builds from `source/app`, so `config/firmware.nix` applies `config/zmk-normalize-diagonals.patch` through `overrideAttrs` with paths relative to `app/`. In v26.09, `app/src/behaviors/behavior_input_two_axis.c` integrates x and y separately, with a fractional remainder for each; it has no diagonal normalization. Zephyr's devicetree tooling rejects properties a binding does not declare, so stock builds fail on `normalize-diagonals` instead of ignoring it.
 
 ## First installation and later updates
 

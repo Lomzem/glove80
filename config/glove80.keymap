@@ -903,6 +903,9 @@
 // Keep wheel velocity constant from the first repeat, with no ramp.
 #define MOUSE_SCROLL_ACCELERATION_EXPONENT 0
 #define MOUSE_SCROLL_TIME_TO_MAXIMUM_SPEED 0
+// Pointer movement: constant velocity from the first tick, with no ramp.
+#define MOUSE_MOTION_ACCELERATION_EXPONENT 0
+#define MOUSE_MOTION_TIME_TO_MAXIMUM_SPEED 0
 
 //////////////////////////////////////////////////////////////////////////////
 //
@@ -10519,6 +10522,9 @@ macros {
     delay-ms = <MOUSE_MOTION_DELAY>;
     acceleration-exponent = <MOUSE_MOTION_ACCELERATION_EXPONENT>;
     time-to-max-speed-ms = <MOUSE_MOTION_TIME_TO_MAXIMUM_SPEED>;
+    // Diagonals move at straight-line speed. Requires the firmware patch in
+    // config/zmk-normalize-diagonals.patch; stock MoErgo builds reject it.
+    normalize-diagonals;
   };
   &msc {
     delay-ms = <MOUSE_SCROLL_DELAY>;
