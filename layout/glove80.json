@@ -10739,10 +10739,10 @@
         ]
       },
       {
-        "value": "&kp",
+        "value": "Custom",
         "params": [
           {
-            "value": "K_APP"
+            "value": "&mo LAYER_Mouse_slow"
           }
         ]
       },
@@ -11021,56 +11021,36 @@
         "value": "&none"
       },
       {
-        "value": "Custom",
+        "value": "&mmv",
         "params": [
           {
-            "value": "&kp RIGHT_INDEX_MOD"
+            "value": "MOVE_LEFT"
           }
-        ],
-        "decoration": {
-          "label": "Shift",
-          "icon": "fa-align-right",
-          "background": "#ffecb3"
-        }
+        ]
       },
       {
-        "value": "Custom",
+        "value": "&mmv",
         "params": [
           {
-            "value": "&kp RIGHT_MIDDY_MOD"
+            "value": "MOVE_DOWN"
           }
-        ],
-        "decoration": {
-          "label": "Ctrl",
-          "icon": "fa-align-right",
-          "background": "#dcedc8"
-        }
+        ]
       },
       {
-        "value": "Custom",
+        "value": "&mmv",
         "params": [
           {
-            "value": "&kp RIGHT_RINGY_MOD"
+            "value": "MOVE_UP"
           }
-        ],
-        "decoration": {
-          "label": "Alt",
-          "icon": "fa-align-right",
-          "background": "#bbdefb"
-        }
+        ]
       },
       {
-        "value": "Custom",
+        "value": "&mmv",
         "params": [
           {
-            "value": "&kp RIGHT_PINKY_MOD"
+            "value": "MOVE_RIGHT"
           }
-        ],
-        "decoration": {
-          "label": "Win",
-          "icon": "fa-align-right",
-          "background": "#ffcdd2"
-        }
+        ]
       },
       {
         "value": "&none"
