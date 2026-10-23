@@ -10507,7 +10507,8 @@ macros {
     #endif
     #ifdef LAYER_Mouse_fast
     fast {
-      layers = <LAYER_Mouse_fast>;
+      // Use fast scaling by default; slow and warp above take precedence.
+      layers = <LAYER_Mouse_fast LAYER_Mouse>;
       input-processors = <&zip_xy_scaler MOUSE_MOTION_SCALER_FAST>;
     };
     #endif
@@ -10543,7 +10544,8 @@ macros {
     #endif
     #ifdef LAYER_Mouse_fast
     fast {
-      layers = <LAYER_Mouse_fast>;
+      // Use fast scaling by default; slow and warp above take precedence.
+      layers = <LAYER_Mouse_fast LAYER_Mouse>;
       input-processors = <&zip_scroll_scaling_processor MOUSE_SCROLL_SCALER_FAST>;
     };
     #endif
