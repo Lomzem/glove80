@@ -9,8 +9,15 @@ Personal bindings (letter names refer to their QWERTY positions):
 - Hold **right T4** (Space / Symbol): `h` types a double quote (`"`), `y` types a backtick, and `n` types a single quote (`'`).
 - On **Symbol**, `w` / `e` type `(` / `)`, and `1` / `4` type `{` / `}`.
 - On **Symbol**, `r` types `;`, and `2` / `3` type `[` / `]`.
-- Hold **left T4** (Backspace / Cursor): `h`, `j`, `k`, `l` send Left, Down, Up, Right; `m` sends Ctrl+Tab; comma sends Ctrl+Shift+Tab.
+- Hold **left T4** (Backspace / Cursor): `h`, `j`, `k`, `l` send Left, Down, Up, Right; `m` sends Ctrl+Tab; comma sends Ctrl+Shift+Tab. `n` sends Home and `.` sends End.
 - Tap **right T6** to toggle [Caps Word](https://zmk.dev/docs/keymaps/behaviors/caps-word), the smart caps mode. Letters become uppercase; digits, underscore, hyphen, Backspace, and Delete continue the mode. Space or another word-breaking key ends it; tap right T6 again to turn it off manually.
+
+Hold **right T5** (Tab / Mouse) for the existing mouse controls:
+
+- Move: `e` up, `s` left, `d` down, `f` right. Alternatively, `m` left, `,` up, `.` down, `/` right.
+- Click: `u` left, `i` middle, `o` right. Hold a click key while moving to drag. Left T4 / left T5 also provide left / right click on this layer.
+- Scroll: `h` up, `n` down, `y` left, `p` right.
+- Speed: hold `l` for slow, `j` for fast, or `k` for warp while moving.
 
 Other layer bindings retain their upstream behavior. The full upstream preset definitions are [documented in the keymap](https://github.com/sunaku/glove80-keymaps/blob/v52/keymap.dtsi).
 
