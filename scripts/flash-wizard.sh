@@ -257,7 +257,7 @@ for half in right left; do
   pause "Press Enter after doing the button/power steps."
   mounted_at=$(python3 "$repo_root/scripts/flash-drive.py" prepare "$half") || return 1
   say "Detected $half bootloader at: $mounted_at"
-  confirm "Copy the validated firmware to the $half half now?" || return 1
+  say "Copying the validated firmware automatically."
   python3 "$repo_root/scripts/flash-drive.py" flash "$half" "$firmware_file" "$mounted_at" || return 1
   step "Wait for the half to restart before moving the cable."
   pause "Press Enter once it has restarted."
