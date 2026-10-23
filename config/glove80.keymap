@@ -896,6 +896,10 @@
 //#define WORLD_HOST_AZERTY  // host computer is set to AZERTY locale
 //#define WORLD_SHIFT_NUMBER // apply Shift to type number row digits
 // TIP: Add more setting overrides here instead of editing them below.
+// Pointer movement: 25% faster than the previous fast default.
+#define MOUSE_MOTION_SCALER_FAST 5 1
+// Held scrolling: 30 wheel notches/second instead of 10.
+#define MOUSE_SCROLL_MAXIMUM_SPEED 30
 
 //////////////////////////////////////////////////////////////////////////////
 //
@@ -10477,6 +10481,39 @@ macros {
   #define ZMK_POINTING_DEFAULT_MOVE_VAL MOUSE_MOTION_MAXIMUM_SPEED
   #define ZMK_POINTING_DEFAULT_SCRL_VAL MOUSE_SCROLL_MAXIMUM_SPEED
   #include <dt-bindings/zmk/pointing.h>
+  // A quick tap produces a short, fixed wheel pulse. With a 16 ms period,
+  // speed 63 produces one notch on the first tick; release before tick two.
+  / {
+    behaviors {
+      scroll_tick: scroll_tick {
+        compatible = "zmk,behavior-input-two-axis";
+        #binding-cells = <1>;
+        x-input-code = <INPUT_REL_HWHEEL>;
+        y-input-code = <INPUT_REL_WHEEL>;
+        trigger-period-ms = <16>;
+        time-to-max-speed-ms = <0>;
+        acceleration-exponent = <0>;
+      };
+      scroll_step: scroll_step {
+        compatible = "zmk,behavior-macro-one-param";
+        #binding-cells = <1>;
+        wait-ms = <0>;
+        tap-ms = <24>;
+        bindings = <&macro_param_1to1>, <&macro_tap &scroll_tick MACRO_PLACEHOLDER>;
+      };
+      scroll_tap: scroll_tap {
+        compatible = "zmk,behavior-hold-tap";
+        #binding-cells = <2>;
+        flavor = "tap-preferred";
+        tapping-term-ms = <180>;
+        bindings = <&msc>, <&scroll_step>;
+      };
+    };
+    scroll_tick_listener {
+      compatible = "zmk,input-listener";
+      device = <&scroll_tick>;
+    };
+  };
   &mmv {
     delay-ms = <MOUSE_MOTION_DELAY>;
     acceleration-exponent = <MOUSE_MOTION_ACCELERATION_EXPONENT>;
@@ -10797,7 +10834,7 @@ macros {
   &none                   &none                   &none                 &none                    &none                                                                                                                                         &none                 &none                 &none                    &none     &none
   &none                   &none                   &none                 &none                    &none                   &none                                                                                           &none                 &none                 &none                 &none                    &none     &none
   &none                   &none  &msc MOUSE_SCROLL_LEFT          &mmv MOVE_UP  &msc MOUSE_SCROLL_RIGHT                   &none                                                                          &msc MOUSE_SCROLL_LEFT             &mkp LCLK             &mkp MCLK             &mkp RCLK  &msc MOUSE_SCROLL_RIGHT     &none
-  &none    &msc MOUSE_SCROLL_UP          &mmv MOVE_LEFT        &mmv MOVE_DOWN          &mmv MOVE_RIGHT    &msc MOUSE_SCROLL_UP                                                                            &msc MOUSE_SCROLL_UP  &msc MOUSE_SCROLL_DOWN  &msc MOUSE_SCROLL_UP  &mo LAYER_Mouse_slow                &kp K_APP  &mkp MB4
+  &none    &msc MOUSE_SCROLL_UP          &mmv MOVE_LEFT        &mmv MOVE_DOWN          &mmv MOVE_RIGHT    &msc MOUSE_SCROLL_UP                                                                            &msc MOUSE_SCROLL_UP  &scroll_tap MOUSE_SCROLL_DOWN MOVE_Y(-63 * NATURAL_SCROLLING_FACTOR)  &scroll_tap MOUSE_SCROLL_UP MOVE_Y(63 * NATURAL_SCROLLING_FACTOR)  &mo LAYER_Mouse_slow                &kp K_APP  &mkp MB4
   &none  &msc MOUSE_SCROLL_DOWN    &mo LAYER_Mouse_slow  &mo LAYER_Mouse_warp     &mo LAYER_Mouse_fast  &msc MOUSE_SCROLL_DOWN  &mkp MCLK  &kp K_APP  &mkp MB5  &kp _CUT         &kp _COPY  &kp _PASTE  &msc MOUSE_SCROLL_DOWN        &mkp LCLK               &mkp MCLK           &mkp RCLK               &mmv MOVE_RIGHT  &mkp MB5
   &none                   &none                &kp _CUT             &kp _COPY               &kp _PASTE                          &mkp LCLK  &mkp RCLK  &mkp MB4     &none  &tog LAYER_Mouse       &none                           &kp RIGHT_INDEX_MOD   &kp RIGHT_MIDDY_MOD   &kp RIGHT_RINGY_MOD      &kp RIGHT_PINKY_MOD     &none
             >;
