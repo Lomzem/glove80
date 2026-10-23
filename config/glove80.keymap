@@ -898,6 +898,8 @@
 // TIP: Add more setting overrides here instead of editing them below.
 // Default pointer movement: 4x scaling, with separate slow and warp modes.
 #define MOUSE_MOTION_SCALER_FAST 4 1
+// H/X: 85% of the default pointer speed (3.4x versus 4x).
+#define MOUSE_MOTION_SCALER_SLOW 17 5
 // Held scrolling: 30 wheel notches/second instead of 10.
 #define MOUSE_SCROLL_MAXIMUM_SPEED 30
 // Keep wheel velocity constant from the first repeat, with no ramp.
