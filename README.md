@@ -17,7 +17,7 @@ Hold **right T5** (Tab / Mouse) for the existing mouse controls:
 - Move: `e` up, `s` left, `d` down, `f` right. `/` also moves right.
 - Click: `m` left, `,` middle, `.` right; `u` / `i` / `o` also provide left / middle / right click. Hold a click key while moving to drag. Left T4 / left T5 also provide left / right click on this layer.
 - Scroll: tap `j` down or `k` up for a one-notch wheel pulse (Vim directions). Hold past 180 ms to scroll at 30 notches/second (previously 10). `h` up, `n` down, `y` left, `p` right also remain available at the faster held rate.
-- Speed: pointer movement defaults to 5× scaling (previously 4×), making `e` / `s` / `d` / `f` 25% faster. Hold `l` or `x` for slow, or `c` for warp. Speed modifiers affect held scrolling; J/K tap pulses stay one notch.
+- Speed: pointer movement defaults to 5× scaling (previously 4×), making `e` / `s` / `d` / `f` 25% faster. Hold `x` for slow, or `l` / `c` for warp. Speed modifiers affect held scrolling; J/K tap pulses stay one notch.
 
 Other layer bindings retain their upstream behavior. The full upstream preset definitions are [documented in the keymap](https://github.com/sunaku/glove80-keymaps/blob/v52/keymap.dtsi).
 
