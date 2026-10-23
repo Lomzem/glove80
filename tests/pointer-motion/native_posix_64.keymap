@@ -1,5 +1,5 @@
 // Pointer settings follow config/glove80.keymap: 200 units/s, 30 notches/s,
-// constant velocity, and fast/slow/warp scalers of 5/1, 1/12, and 12/1.
+// constant velocity, and fast/slow/warp scalers of 4/1, 1/12, and 12/1.
 #define ZMK_POINTING_DEFAULT_MOVE_VAL 200
 #define ZMK_POINTING_DEFAULT_SCRL_VAL 30
 
@@ -31,7 +31,7 @@
     };
     fast {
         layers = <0>;
-        input-processors = <&zip_xy_scaler 5 1>;
+        input-processors = <&zip_xy_scaler 4 1>;
     };
 };
 

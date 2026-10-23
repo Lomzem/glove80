@@ -896,8 +896,8 @@
 //#define WORLD_HOST_AZERTY  // host computer is set to AZERTY locale
 //#define WORLD_SHIFT_NUMBER // apply Shift to type number row digits
 // TIP: Add more setting overrides here instead of editing them below.
-// Pointer movement: 25% faster than the previous fast default.
-#define MOUSE_MOTION_SCALER_FAST 5 1
+// Default pointer movement: 4x scaling, with separate slow and warp modes.
+#define MOUSE_MOTION_SCALER_FAST 4 1
 // Held scrolling: 30 wheel notches/second instead of 10.
 #define MOUSE_SCROLL_MAXIMUM_SPEED 30
 // Keep wheel velocity constant from the first repeat, with no ramp.
