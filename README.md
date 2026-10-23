@@ -16,8 +16,8 @@ Hold **right T5** (Tab / Mouse) for the existing mouse controls:
 
 - Move: `e` up, `s` left, `d` down, `f` right. Alternatively, `m` left, `,` up, `.` down, `/` right.
 - Click: `u` left, `i` middle, `o` right. Hold a click key while moving to drag. Left T4 / left T5 also provide left / right click on this layer.
-- Scroll: `h` up, `n` down, `y` left, `p` right.
-- Speed: fast (`j`) is the default for movement and scrolling. Hold `l` for slow or `k` for warp; `j` keeps the default fast speed.
+- Scroll: `j` down and `k` up (Vim directions); `h` up, `n` down, `y` left, `p` right also remain available.
+- Speed: fast is the default for movement and scrolling. Hold `l` or `x` for slow, or `c` for warp.
 
 Other layer bindings retain their upstream behavior. The full upstream preset definitions are [documented in the keymap](https://github.com/sunaku/glove80-keymaps/blob/v52/keymap.dtsi).
 
