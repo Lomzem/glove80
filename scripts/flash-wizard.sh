@@ -236,8 +236,8 @@ say "Save your old firmware or export your current layout before replacing it."
 confirm "Continue with these stages?" || return 1
 say "Use both for first installation, firmware updates, or advanced configuration changes."
 say "Use left only for later keymap-only updates on the same firmware."
-ask install_mode "Type 'both' or 'left' (Enter for both):"
-install_mode=${install_mode:-both}
+ask install_mode "Type 'left' or 'both' (Enter for left):"
+install_mode=${install_mode:-left}
 [[ $install_mode == both || $install_mode == left ]] || { say "Expected both or left."; return 1; }
 
 for half in right left; do
